@@ -4,7 +4,7 @@ let globalClientPromise;
 export function getClientPromise() {
  const uri = process.env.MONGODB_URI;
  if (!uri) {
-    throw new Error("Please add your Mongo URI to .env.local or set MONGODB_URI env variable");
+    throw new Error("mongodb+srv://u6726115_db_user:LXWyruEMyeCHpVeK@wad-01.donu9nt.mongodb.net/?appName=Wad-01");
  }
  if (process.env.NODE_ENV === "development") {
  if (!globalClientPromise) {
