@@ -3,8 +3,16 @@ import corsHeaders from "@/lib/cors";
 import { getClientPromise } from "@/lib/mongodb";
 
 import bcrypt from "bcrypt";
+import { randomUUID } from "crypto";
 
 import { NextResponse } from "next/server";
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: corsHeaders,
+  });
+}
  
 export async function GET() {
 
@@ -109,6 +117,7 @@ try {
     const db = client.db("wad-01");
 
     const result = await db.collection("user").insertOne({
+        user_id: randomUUID(),
 
         username: username,
 
@@ -162,7 +171,17 @@ catch (exception) {
 
         }
 
-    }  return NextResponse.json({
+        else if (errorMsg.includes("user_id")) {
+
+            displayErrorMsg = "Duplicate User ID!!"
+
+        }
+
+    } else {
+        displayErrorMsg = "Failed to create user";
+    }
+
+    return NextResponse.json({
 
         message: displayErrorMsg
 
